@@ -1,6 +1,7 @@
 const sequelize = require('./config/db');
 const Experience = require('./models/Experience');
 const Promo = require('./models/Promo');
+const Booking = require('./models/Booking');
 
 (async () => {
   try {

@@ -1,23 +1,19 @@
-import axios from 'axios'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-
-type Experience = {
-  id: number | string
-  title: string
-  shortDescription: string
-  price: number
-  image: string
-}
+import { api, Experience } from '../lib/api'
 
 export default function Home() {
   const [experiences, setExperiences] = useState<Experience[]>([])
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
 
   useEffect(() => {
-    axios.get(process.env.NEXT_PUBLIC_API_URL + '/experiences')
-      .then(res => setExperiences(res.data))
-      .catch(err => console.error(err))
+    api.getExperiences()
+      .then(data => setExperiences(data))
+      .catch(err => {
+        console.error(err)
+        setError('Failed to load experiences')
+      })
       .finally(() => setLoading(false))
   }, [])
 
@@ -25,6 +21,7 @@ export default function Home() {
     <main className="max-w-4xl mx-auto p-4">
       <h1 className="text-2xl font-semibold mb-4">BookIt — Experiences</h1>
       {loading && <p>Loading...</p>}
+      {error && <p className="text-red-600">{error}</p>}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {experiences.map(exp => (
           <div key={exp.id} className="bg-white rounded-lg shadow p-4">
@@ -33,7 +30,7 @@ export default function Home() {
             <p className="text-sm text-gray-600">{exp.shortDescription}</p>
             <div className="flex items-center justify-between mt-2">
               <div className="font-semibold">₹{exp.price}</div>
-              <Link href={`/details/${exp.id}`} className="text-blue-600">View</Link>
+              <Link href={`/experiences/${exp.id}`} className="text-blue-600">View</Link>
             </div>
           </div>
         ))}

@@ -1,0 +1,21 @@
+### Validate a Promo Code
+# This request checks if a promo code is valid.
+POST http://localhost:5000/promo/validate
+Content-Type: application/json
+
+{
+  "code": "SAVE10"
+}
+
+### Create a New Booking
+# This request creates a new booking with user details.
+POST http://localhost:5000/bookings
+Content-Type: application/json
+
+{
+  "experienceId": 1,
+  "userName": "Test User From REST Client",
+  "email": "test@example.com",
+  "slotDate": "2025-11-01 17:00",
+  "promoCode": "SAVE10"
+}
