@@ -6,14 +6,21 @@ exports.create = async (req, res) => {
   if (!experienceId || !userName || !email || !slotDate) {
     return res.status(400).json({ message: 'Missing required fields' });
   }
-  // prevent double booking for same slot and experience
-  const existing = await Booking.findOne({ where: { ExperienceId: experienceId, slotDate }});
-  if (existing) return res.status(400).json({ message: 'Slot already booked' });
 
   const exp = await Experience.findByPk(experienceId);
   if (!exp) return res.status(400).json({ message: 'Experience not found' });
 
-  const finalPrice = exp.price; // promo logic could adjust
+  // capacity check based on availableTimes
+  const t = slotDate.split(' ')[1];
+  const times = Array.isArray(exp.availableTimes) ? exp.availableTimes : [];
+  const entry = times.find((x) => (x.time || x) === t);
+  const capacity = entry?.capacity ?? entry?.left ?? 0;
+  if (!capacity) return res.status(400).json({ message: 'Slot already booked' });
+
+  const count = await Booking.count({ where: { ExperienceId: experienceId, slotDate } });
+  if (count >= capacity) return res.status(400).json({ message: 'Slot already booked' });
+
+  const finalPrice = exp.price;
   const booking = await Booking.create({ userName, email, slotDate, promoCode, finalPrice, ExperienceId: experienceId });
   res.json({ id: booking.id, message: 'Booked' });
 };

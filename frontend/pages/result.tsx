@@ -1,41 +1,56 @@
-import { useRouter } from 'next/router'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 export default function Result() {
   const router = useRouter()
-  const { status, bookingId } = router.query
+  const { status, bookingId, message } = router.query as { status?: string, bookingId?: string, message?: string }
+
+  const renderContent = () => {
+    switch (status) {
+      case 'success':
+        return (
+          <div className="text-center">
+            <h1 className="text-2xl font-semibold text-green-700">Booking Confirmed</h1>
+            {bookingId && <p className="mt-2">Your booking ID is <span className="font-mono">{bookingId}</span>.</p>}
+          </div>
+        )
+      case 'failure':
+        return (
+          <div className="text-center">
+            <h1 className="text-2xl font-semibold text-red-700">Booking Failed</h1>
+            <p className="mt-2 text-gray-700">{message || 'Something went wrong. Please try again.'}</p>
+          </div>
+        )
+      case 'soldout':
+        return (
+          <div className="text-center">
+            <h1 className="text-2xl font-semibold text-orange-700">Slot Sold Out</h1>
+            <p className="mt-2 text-gray-700">The selected slot is no longer available. Please choose another slot.</p>
+          </div>
+        )
+      default:
+        return (
+          <div className="text-center">
+            <h1 className="text-2xl font-semibold">Booking Status</h1>
+            <p className="mt-2 text-gray-700">Awaiting status...</p>
+          </div>
+        )
+    }
+  }
 
   return (
-    <main className="max-w-xl mx-auto p-4">
-      {status === 'success' ? (
-        <div className="bg-white rounded-lg shadow-md p-8 text-center">
-          <div className="text-6xl mb-4">✓</div>
-          <h1 className="text-3xl font-bold text-green-600 mb-2">Booking Confirmed!</h1>
-          <p className="text-gray-600 mb-4">Your booking has been successfully processed.</p>
-          <div className="bg-gray-50 rounded p-4 mb-6">
-            <p className="text-sm text-gray-600">Booking ID</p>
-            <p className="text-xl font-mono font-semibold">{bookingId}</p>
-          </div>
-          <Link 
-            href="/" 
-            className="inline-block px-6 py-3 bg-blue-600 text-white rounded hover:bg-blue-700"
-          >
-            Back to Home
-          </Link>
+    <main className="min-h-[70vh] flex items-center justify-center px-4 sm:px-6 lg:px-8 py-8">
+      <div className="bg-white rounded-xl shadow-sm ring-1 ring-gray-100 p-8 text-center max-w-lg w-full">
+        <div className="text-5xl mb-3">
+          {status === 'success' ? '✅' : status === 'soldout' ? '⚠️' : status === 'failure' ? '❌' : 'ℹ️'}
         </div>
-      ) : (
-        <div className="bg-white rounded-lg shadow-md p-8 text-center">
-          <div className="text-6xl mb-4 text-red-600">✗</div>
-          <h1 className="text-3xl font-bold text-red-600 mb-2">Booking Failed</h1>
-          <p className="text-gray-600 mb-6">Something went wrong. Please try again.</p>
-          <Link 
-            href="/" 
-            className="inline-block px-6 py-3 bg-blue-600 text-white rounded hover:bg-blue-700"
-          >
-            Back to Home
-          </Link>
+        {renderContent()}
+        <div className="mt-6 flex justify-center gap-4">
+          <Link href="/" className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600">Back to Home</Link>
+          <button onClick={() => router.back()} className="px-4 py-2 bg-gray-100 rounded-md hover:bg-gray-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-400">Go Back</button>
         </div>
-      )}
+      </div>
     </main>
   )
 }
+

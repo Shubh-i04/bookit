@@ -12,6 +12,8 @@ export interface Experience {
   availableSlots: string[]
   createdAt: string
   updatedAt: string
+  availableDates?: string[]
+  availableTimes?: { time: string; left?: number; soldOut?: boolean }[]
 }
 
 export interface PromoValidation {
@@ -52,8 +54,11 @@ export const api = {
     try {
       const response = await axios.post(`${API_URL}/promo/validate`, { code })
       return response.data
-    } catch (error: any) {
-      if (error.response?.status === 404) {
+    } catch (error) {
+      /*if (error.response?.status === 404) {
+        return { valid: false, message: 'Invalid promo code' }
+      }*/
+      if (axios.isAxiosError(error) && error.response?.status === 404) {
         return { valid: false, message: 'Invalid promo code' }
       }
       throw error
