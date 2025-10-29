@@ -1,6 +1,7 @@
 import axios from 'axios'
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'
+// When deployed behind rewrites, leave NEXT_PUBLIC_API_URL blank to use same-origin paths.
+const API_URL = process.env.NEXT_PUBLIC_API_URL ?? ''
 
 export interface Experience {
   id: number
