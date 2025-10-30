@@ -94,11 +94,14 @@ To run this project on your local machine, follow these steps.
     DB_NAME=railway
     DB_PORT=13087
     ```
-
-    - **Run the backend server:**
+    - **Seed the database with initial data (only needs to be run once):**
       ```bash
-      npm start
+      npm run seed
       ```
+
+    - **Run the backend development server:**
+      ```bash
+      npm run dev
     - The backend should now be running on `http://localhost:5000`.
 
 3.  **Setup the Frontend:**
@@ -122,9 +125,22 @@ To run this project on your local machine, follow these steps.
 
     - **Run the frontend application:**
       ```bash
-      npm start
+      npm run dev
       ```
     - The frontend should now open and run in your browser at `http://localhost:3000`.
+
+---
+## 📜 Available Scripts
+
+### Backend (`/backend`)
+- **`npm run dev`**: Starts the backend server in development mode with auto-reloading.
+- **`npm start`**: Starts the backend server for production.
+- **`npm run seed`**: Populates the database with initial sample data. Resets all existing data.
+
+### Frontend (`/frontend`)
+- **`npm run dev`**: Starts the Next.js application in development mode.
+- **`npm run build`**: Creates an optimized production build of the application.
+- **`npm start`**: Starts the production server for the built application.
 
 ---
 
@@ -135,15 +151,11 @@ This project requires environment variables to connect to the database and run c
 #### Backend (`/backend/.env`)
 
 - `PORT`: The port the Express server will run on.
-- `DB_HOST`: The host URL of your MySQL database.
-- `DB_USER`: The username for your database.
-- `DB_PASSWORD`: The password for your database.
-- `DB_NAME`: The name of the database.
-- `DB_PORT`: The port your database is listening on.
+- `DB_HOST`, `DB_USER`, `DB_PASSWORD`, `DB_NAME`, `DB_PORT`: Credentials for your MySQL database.
 
 #### Frontend (`/frontend/.env`)
 
-- `REACT_APP_API_URL`: The full base URL for the backend API. For local development, this is `http://localhost:5000`. For production, this would be your live backend URL (e.g., `https://bookit-bx1s.onrender.com`).
+- `NEXT_PUBLIC_API_URL`: The full base URL for the backend API (e.g., `http://localhost:5000/api`).
 
 ---
 
