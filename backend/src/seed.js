@@ -1,3 +1,4 @@
+require('dotenv').config();
 const sequelize = require('./config/db');
 const Experience = require('./models/Experience');
 const Promo = require('./models/Promo');

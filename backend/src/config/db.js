@@ -8,7 +8,7 @@ const isProduction = process.env.DB_HOST && !process.env.DB_HOST.includes('local
 const sequelize = new Sequelize(
   process.env.DB_NAME,
   process.env.DB_USER,
-  process.env.DB_PASS,
+  process.env.DB_PASSWORD,
   {
     host: process.env.DB_HOST,
     // --- CHANGE #1: Use the DB_PORT from your .env file ---

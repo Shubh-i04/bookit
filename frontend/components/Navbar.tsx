@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import Logo from './Logo'
 
 export default function Navbar() {
   const router = useRouter()
@@ -25,7 +26,9 @@ export default function Navbar() {
     <nav className="bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white sticky top-0 z-30 shadow-sm">
       <div className="max-w-6xl mx-auto px-4 sm:px-8">
         <div className="flex items-center justify-between py-3 gap-3">
-          <Link href="/" className="text-lg font-semibold tracking-tight text-gray-900">BookIt</Link>
+          <Link href="/" className="flex items-center gap-2 min-w-[140px]" aria-label="BookIt">
+            <Logo className="h-9" />
+          </Link>
           <div className="flex-1 max-w-xl">
             <div className="flex items-center gap-2">
               <input
