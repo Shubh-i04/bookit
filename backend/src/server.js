@@ -1,4 +1,5 @@
 const express = require('express');
+const helmet = require('helmet');
 const cors = require('cors');
 require('dotenv').config();
 const sequelize = require('./config/db');
@@ -11,6 +12,14 @@ const Experience = require('./models/Experience');
 const Promo = require('./models/Promo');
 
 const app = express();
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+      "script-src": ["'self'", "'unsafe-eval'"], // Allow scripts from self and allow 'unsafe-eval'
+    },
+  })
+);
 app.use(cors());
 app.use(express.json());
 
