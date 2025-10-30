@@ -10,7 +10,7 @@ Bookit is a full-stack web application designed to provide users with a seamless
 
 ### 📸 Project Screenshot
 
-*(Recommended: Add a screenshot or GIF of your application here. Replace the placeholder below.)*
+
 
 ![Bookit Application Screenshot]<img width="1610" height="916" alt="image" src="https://github.com/user-attachments/assets/bcb105e9-0bc0-4fe5-9771-8c93c15c1f9a" /> <img width="1432" height="910" alt="image" src="https://github.com/user-attachments/assets/53e2965c-2435-4ad6-900a-4282e2675c12" /> <img width="1381" height="726" alt="image" src="https://github.com/user-attachments/assets/691b1781-0760-475c-9b2f-78b8b138ee06" /> <img width="845" height="479" alt="image" src="https://github.com/user-attachments/assets/3e17dd5b-2681-4cba-a820-1d41fa439e85" />
 
